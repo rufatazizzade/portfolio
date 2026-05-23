@@ -39,26 +39,21 @@ const highlights = [
   },
 ];
 
-export default function About() {
+export default function About({ settings = {} }: { settings?: Record<string, string> }) {
   return (
     <section id="about" className="bg-surface">
       <div className="section-container">
         <SectionHeading
           title="About Me"
-          subtitle="Building practical engineering solutions at the intersection of software and hardware"
+          subtitle={settings.about_intro || "Building practical engineering solutions at the intersection of software and hardware"}
         />
 
         {/* About text */}
         <div className="max-w-3xl mx-auto mb-14">
-          <p className="text-slate-600 leading-relaxed text-base md:text-lg text-center">
-            I&apos;m a motivated Software Engineering student at{" "}
-            <span className="font-semibold text-slate-800">Czech Technical University in Prague</span>.
-            My interests lie in{" "}
-            <span className="font-semibold text-primary">Rust</span>, systems programming,
-            embedded systems, and real-time software-hardware integration. I have experience building
-            MVP-stage products, working with cross-functional technical teams, and contributing to
-            practical engineering solutions. I&apos;m especially interested in cloud and edge solutions,
-            application design, and scalable technical systems.
+          <p className="text-slate-600 leading-relaxed text-base md:text-lg text-center whitespace-pre-line">
+            {settings.about_description || 
+              `I'm a motivated Software Engineering student at Czech Technical University in Prague.
+              My interests lie in Rust, systems programming, embedded systems, and real-time software-hardware integration. I have experience building MVP-stage products, working with cross-functional technical teams, and contributing to practical engineering solutions. I'm especially interested in cloud and edge solutions, application design, and scalable technical systems.`}
           </p>
         </div>
 

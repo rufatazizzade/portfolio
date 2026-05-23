@@ -1,42 +1,40 @@
 import SectionHeading from "./SectionHeading";
 
-interface SkillCategory {
-  title: string;
-  icon: React.ReactNode;
-  skills: string[];
+import { Code2, Terminal, Globe2, Cpu, Wrench } from "lucide-react";
+
+interface SkillProps {
+  skills: {
+    id: string;
+    name: string;
+    category: string;
+    icon: string | null;
+  }[];
 }
 
-const skillCategories: SkillCategory[] = [
-  {
-    title: "Technical Skills",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-      </svg>
-    ),
-    skills: ["Rust", "C/C++ (OOP)", "Embedded Systems", "Machine Learning", "Node.js", "Microservices", "Python (Pandas, PyTorch)"],
-  },
-  {
-    title: "Tools",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.42 15.17l-5.384-3.11A1 1 0 015 11.18V5.82a1 1 0 01.537-.886l5.384-3.11a1 1 0 01.958 0l5.384 3.11A1 1 0 0118 5.82v5.36a1 1 0 01-.537.886l-5.384 3.11a1 1 0 01-.958 0z" />
-      </svg>
-    ),
-    skills: ["Git", "Linux", "Hardware Prototyping", "Arduino", "BASYS3", "Docker", "Kubernetes"],
-  },
-  {
-    title: "Languages",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-      </svg>
-    ),
-    skills: ["English (Fluent)", "Azerbaijani (Fluent)", "Turkish (Fluent)", "Portuguese (Beginner)"],
-  },
-];
+export default function Skills({ skills }: SkillProps) {
+  // Group skills by category
+  const categoriesMap = skills.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill.name);
+    return acc;
+  }, {} as Record<string, string[]>);
 
-export default function Skills() {
+  const skillCategories = Object.keys(categoriesMap).map((category) => {
+    // Pick an icon based on category name roughly, or default to Code2
+    let icon = <Code2 className="w-5 h-5" />;
+    if (category.toLowerCase().includes("tool")) icon = <Wrench className="w-5 h-5" />;
+    if (category.toLowerCase().includes("lang")) icon = <Globe2 className="w-5 h-5" />;
+    if (category.toLowerCase().includes("tech")) icon = <Cpu className="w-5 h-5" />;
+    if (category.toLowerCase().includes("sys")) icon = <Terminal className="w-5 h-5" />;
+
+    return {
+      title: category,
+      icon,
+      skills: categoriesMap[category],
+    };
+  });
   return (
     <section id="skills">
       <div className="section-container">

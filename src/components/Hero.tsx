@@ -1,6 +1,9 @@
 import Link from "next/link";
 
-export default function Hero() {
+export default function Hero({ settings = {} }: { settings?: Record<string, string> }) {
+  const [firstName, ...lastNameParts] = (settings.hero_title || "Rufat Azizzade").split(" ");
+  const lastName = lastNameParts.join(" ");
+
   return (
     <section
       id="hero"
@@ -21,7 +24,7 @@ export default function Hero() {
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
             </svg>
-            Based in Prague
+            {settings.about_location || "Based in Prague"}
           </span>
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-50 text-accent text-xs font-medium border border-sky-100">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -40,18 +43,18 @@ export default function Hero() {
 
         {/* Name */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 animate-fade-in-up">
-          <span className="text-slate-900">Rufat </span>
-          <span className="gradient-text">Azizzade</span>
+          <span className="text-slate-900">{firstName} </span>
+          {lastName && <span className="gradient-text">{lastName}</span>}
         </h1>
 
         {/* Headline */}
         <p className="text-base sm:text-lg md:text-xl text-slate-500 font-medium max-w-3xl mx-auto mb-6 animate-fade-in-up delay-100">
-          Software Engineering Student · Rust &amp; Systems Programming Enthusiast · Builder of Real-Time Hardware-Software Solutions
+          {settings.hero_headline || "Software Engineering Student · Rust & Systems Programming Enthusiast"}
         </p>
 
         {/* Short Intro */}
         <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200">
-          Motivated Software Engineering student at Czech Technical University in Prague with a strong interest in Rust and systems programming. Experienced in building real-time and MVP-stage hardware-software solutions, with a solid foundation in Python and TypeScript, and familiarity with Linux, Bash, and Docker.
+          {settings.hero_intro || "Motivated Software Engineering student..."}
         </p>
 
         {/* CTA Buttons */}

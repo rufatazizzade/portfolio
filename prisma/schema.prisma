@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  name     String?
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  content     String?  // Full description
+  category    String?
+  techStack   String?  // Comma separated or JSON string
+  imageUrl    String?
+  projectUrl  String?
+  githubUrl   String?
+  demoUrl     String?
+  featured    Boolean  @default(false)
+  visible     Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  icon        String?
+  proficiency Int?
+  visible     Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  company     String
+  position    String
+  location    String?
+  startDate   String
+  endDate     String?  // e.g. "Present"
+  description String
+  visible     Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  school      String
+  degree      String
+  field       String?
+  location    String?
+  startDate   String
+  endDate     String?
+  description String?
+  visible     Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Achievement {
+  id           String   @id @default(cuid())
+  title        String
+  organization String
+  date         String?
+  description  String?
+  imageUrl     String?
+  visible      Boolean  @default(true)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
